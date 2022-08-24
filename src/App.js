@@ -32,6 +32,15 @@ function useInput(defaultValue) {
 function clickMe() {
   alert("You clicked me!");
 }
+let percentValue = 0;
+let percentage = Math.round(percentValue);
+const inputRows = useInput();
+const inputRowLength = useInput();
+
+let stitchCount = inputRowLength.value * inputRows.value;
+function increment(){
+  percentValue + 1;
+}
 
 //button stuff below
 const Button = styled.button`
@@ -59,21 +68,10 @@ Button.defaultProps = {
 
 function App() {
   const [progress, setProgress] = useState(0);
-  const inputRows = useInput();
-  const inputRowLength = useInput();
-  let stitchCount = inputRowLength.value * inputRows.value;
 
-  useEffect(() => {
-    progressInterval = setInterval(() => {
-      setProgress(prev => prev + 2);
-    }, 100);
-  }, []);
 
-  useEffect(() => {
-    if (progress >= 100) {
-      clearInterval(progressInterval);
-    }
-  }, [progress]);
+
+
 
   return (
     <div className="m-5">
@@ -86,11 +84,11 @@ function App() {
         placeholder="Enter Row Length in here"/>
       <span>Stitch Count: {stitchCount} </span>
       <p>Project Progress</p>
-      <div className="progress w-50" style={{ height: 30 }}>
-      <div className="progress-bar" role="progressbar" style={{ width: `${progress}%` }}>{progress}%</div>
-      </div>
+      <div className="progressBar">
+       <ProgressBar now={percentage} label={`${percentage}% completed`} />
+    </div>
       <p>Row buttons:</p>
-      <Button onClick={clickMe}>+1</Button>
+      <Button onClick={increment}>+1</Button>
       <Button onClick={clickMe}>+10</Button>
       <Button onClick={clickMe}>+20</Button>
       <Button onClick={clickMe}>+50</Button>
