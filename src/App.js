@@ -32,15 +32,7 @@ function useInput(defaultValue) {
 function clickMe() {
   alert("You clicked me!");
 }
-let percentValue = 0;
-let percentage = Math.round(percentValue);
-const inputRows = useInput();
-const inputRowLength = useInput();
 
-let stitchCount = inputRowLength.value * inputRows.value;
-function increment(){
-  percentValue + 1;
-}
 
 //button stuff below
 const Button = styled.button`
@@ -66,40 +58,65 @@ Button.defaultProps = {
   theme: "blue"
 };
 
+
+
+
 function App() {
-  const [progress, setProgress] = useState(0);
+ 
+  const inputRows = useInput();
+  const inputRowLength = useInput();
+  let rows = inputRows.value;
+  let rowLength = inputRowLength.value;
+  let stitchCount = inputRowLength.value * inputRows.value;
 
+  const [counter, setCounter] = useState(0);
+  const incrementCounter = () => setCounter(counter + 1);
+  const incrementCounter10 = () => setCounter(counter + 10);
+  const incrementCounter20 = () => setCounter(counter + 20);
+  const incrementCounter50 = () => setCounter(counter + 50);
+  const incrementCounter100 = () => setCounter(counter + 100);
+  const incrementCounter200 = () => setCounter(counter + 200);
 
+  const incrementCounterRow = () => setCounter(counter + (inputRowLength.value * 1));
+  const incrementCounterRow10 = () => setCounter(counter + (inputRowLength.value * 10));
+  const incrementCounterRow20 = () => setCounter(counter + (inputRowLength.value * 20));
+  const incrementCounterRow50 = () => setCounter(counter + (inputRowLength.value * 50));
+  const incrementCounterRow100 = () => setCounter(counter + (inputRowLength.value * 100));
+  const incrementCounterRow200 = () => setCounter(counter + (inputRowLength.value * 200));
+  let percentValue = counter / stitchCount;
+  let percentage = Math.round(percentValue * 100);
+  let currentRow = Math.ceil(counter/rowLength);
+  let currentStitch = counter - ((currentRow-1) * rowLength);
 
-
-
+  
   return (
     <div className="m-5">
       <h5 className="mb-3">Georgies Crochet Progress Bar!</h5>
-      <StyledInput
-        {...inputRows}
-        placeholder="Enter Row Count in here"/>
-              <StyledInput
-        {...inputRowLength}
-        placeholder="Enter Row Length in here"/>
-      <span>Stitch Count: {stitchCount} </span>
-      <p>Project Progress</p>
+      <p>Number of Rows:<StyledInput {...inputRows}
+        placeholder="Enter Number of Rows"/>
+        Number of Stitches Per Row:<StyledInput {...inputRowLength}
+        placeholder="Enter Number of Stitches Per Row"/></p>
+      <span>Final Stitch Count: {stitchCount} </span>
+      <p>Current Stitch Total: {counter}</p>
+      <p>Current Row: {currentRow}</p>
+      <p>Current Stitch in Current Row: {currentStitch}</p>
       <div className="progressBar">
        <ProgressBar now={percentage} label={`${percentage}% completed`} />
     </div>
+      <p>Stitch buttons:</p>
+      <Button onClick={incrementCounter}>+1</Button>
+      <Button onClick={incrementCounter10}>+10</Button>
+      <Button onClick={incrementCounter20}>+20</Button>
+      <Button onClick={incrementCounter50}>+50</Button>
+      <Button onClick={incrementCounter100}>+100</Button>
+      <Button onClick={incrementCounter200}>+200</Button>
       <p>Row buttons:</p>
-      <Button onClick={increment}>+1</Button>
-      <Button onClick={clickMe}>+10</Button>
-      <Button onClick={clickMe}>+20</Button>
-      <Button onClick={clickMe}>+50</Button>
-      <Button onClick={clickMe}>+100</Button>
-      <p>stitch buttons:</p>
-      <Button onClick={clickMe}>+1</Button>
-      <Button onClick={clickMe}>+10</Button>
-      <Button onClick={clickMe}>+20</Button>
-      <Button onClick={clickMe}>+50</Button>
-      <Button onClick={clickMe}>+100</Button>
-      <Button onClick={clickMe}>+200</Button>
+      <Button onClick={incrementCounterRow}>+1</Button>
+      <Button onClick={incrementCounterRow10}>+10</Button>
+      <Button onClick={incrementCounterRow20}>+20</Button>
+      <Button onClick={incrementCounterRow50}>+50</Button>
+      <Button onClick={incrementCounterRow100}>+100</Button>
+
     </div>
   );
 }
