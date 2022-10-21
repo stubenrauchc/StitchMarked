@@ -91,7 +91,7 @@ function App() {
   
   return (
     <div className="m-5">
-      <h5 className="mb-3">Georgies Crochet Progress Bar!</h5>
+      <h5 className="mb-3">Welcome to StitchMarked!</h5>
       <p>Number of Rows:<StyledInput {...inputRows}
         placeholder="Enter Number of Rows"/>
         Number of Stitches Per Row:<StyledInput {...inputRowLength}
